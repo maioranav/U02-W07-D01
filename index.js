@@ -10,6 +10,16 @@ const Utente = function (nome, cognome, dataDiNascita) {
 Utente.prototype.id = 0
 const elencoUtenti = []
 
+const datePrint = (object) => {
+   options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+   }
+   dataRaw = new Date(object)
+   return new Intl.DateTimeFormat("it-IT", options).format(dataRaw)
+}
+
 const aggiungi = () => {
    let nuovoNome = document.getElementById("name")
    let nuovoCognome = document.getElementById("surname")
@@ -21,10 +31,13 @@ const aggiungi = () => {
       nuovoUtente = new Utente(nuovoNome.value, nuovoCognome.value, nuovaData.value)
       nuovoUtente.id = righeTabella.length + 1
       nuovaRiga = document.createElement('tr');
+
+      dateString = datePrint(nuovoUtente.dob);
+
       nuovaRiga.innerHTML = `<th scope="row">${nuovoUtente.id}</th>
       <td> ${nuovoUtente.name}</td>
       <td>${nuovoUtente.surname}</td>
-      <td>${nuovoUtente.dob}</td>`;
+      <td>${dateString}</td>`;
       tabella.appendChild(nuovaRiga)
       console.log(nuovoUtente.showMe())
 
@@ -45,4 +58,4 @@ const aggiungi = () => {
 
 }
 
-document.querySelector("button[type=button]").onclick(aggiungi())
+document.querySelector("button[type=button]").addEventListener("click", aggiungi);
